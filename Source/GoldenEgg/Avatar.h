@@ -27,6 +27,9 @@ public:
 	void MoveForward(float amount);
 	void MoveRight(float amount);
 	void MoveUp(float amount);
+	void Yaw(float amount);
+	void Pitch(float amount);
+
 	void SetFlyMode();
 	bool flyMode = false;
 };

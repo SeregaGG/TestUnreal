@@ -4,6 +4,9 @@
 #include "Avatar.h"
 #include "Runtime/Engine/Classes/Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/World.h"
+#include "GameFramework/Pawn.h"
+
 // Sets default values
 AAvatar::AAvatar()
 {
@@ -35,6 +38,8 @@ void AAvatar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
 	PlayerInputComponent->BindAxis("Fly", this, &AAvatar::MoveUp);
 	PlayerInputComponent->BindAction("SetFlyMode", IE_Pressed,this, &AAvatar::SetFlyMode);
+	PlayerInputComponent->BindAxis("Pitch", this, &AAvatar::Pitch);
+	PlayerInputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
 }
 
 
@@ -83,4 +88,14 @@ void AAvatar::SetFlyMode()
 		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
 		flyMode = false;
 	}
+}
+
+void AAvatar::Pitch(float amount)
+{
+	AddControllerPitchInput(100.f * amount * GetWorld()->GetDeltaSeconds());
+}
+
+void AAvatar::Yaw(float amount)
+{
+	AddControllerYawInput(100.f * amount * GetWorld()->GetDeltaSeconds());
 }
